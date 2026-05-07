@@ -31,7 +31,7 @@ git clone git@github.com:hkh7670/claude-config.git ~/.claude
 다른 머신에서 푸시한 변경사항 가져오기:
 
 ```bash
-cd ~/.claude && git pull
+git -C ~/.claude pull
 ```
 
 ## 변경사항 올리기 (push)
@@ -39,10 +39,7 @@ cd ~/.claude && git pull
 설정 변경 후 다른 머신과 공유:
 
 ```bash
-cd ~/.claude
-git add .
-git commit -m "update: 변경 내용"
-git push
+git -C ~/.claude add . && git -C ~/.claude commit -m "update: 변경 내용" && git -C ~/.claude push
 ```
 
 ## 동기화 제외 항목
@@ -60,8 +57,8 @@ git push
 
 ```bash
 # ~/.zshrc 또는 ~/.bashrc
-alias claude-sync='cd ~/.claude && git pull'
-alias claude-push='cd ~/.claude && git add . && git commit -m "update" && git push'
+alias claude-sync='git -C ~/.claude pull'
+alias claude-push='git -C ~/.claude add . && git -C ~/.claude commit -m "update" && git -C ~/.claude push'
 ```
 
 또는 `chezmoi` 같은 dotfiles 매니저 사용도 가능.
