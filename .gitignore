@@ -1,0 +1,36 @@
+# OS
+.DS_Store
+
+# Conversation history & runtime data (machine-specific, sensitive, huge)
+projects/
+sessions/
+session-data/
+session-env/
+history.jsonl
+todos/
+plans/
+file-history/
+shell-snapshots/
+
+# Logs
+*.log
+bash-commands.log
+cost-tracker.log
+
+# Caches & local state
+cache/
+backups/
+metrics/
+statsig/
+mcp-needs-auth-cache.json
+
+# Plugin install state (re-installed per machine)
+plugins/
+.agents/
+ecc/
+homunculus/
+
+# Credentials (defensive)
+.credentials*
+*.token
+*api*key*

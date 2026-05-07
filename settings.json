@@ -1,0 +1,21 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/kyu/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "everything-claude-code@everything-claude-code": true,
+    "jdtls-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "everything-claude-code": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/affaan-m/everything-claude-code.git"
+      }
+    }
+  },
+  "syntaxHighlightingDisabled": false,
+  "theme": "auto",
+  "model": "opus"
+}
