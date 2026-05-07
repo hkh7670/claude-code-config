@@ -1,7 +1,7 @@
 {
   "statusLine": {
     "type": "command",
-    "command": "bash /Users/kyu/.claude/statusline-command.sh"
+    "command": "bash $HOME/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
     "everything-claude-code@everything-claude-code": true,
@@ -16,6 +16,5 @@
     }
   },
   "syntaxHighlightingDisabled": false,
-  "theme": "auto",
-  "model": "opus"
+  "theme": "auto"
 }
