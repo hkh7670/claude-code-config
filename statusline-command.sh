@@ -6,7 +6,6 @@ input=$(cat)
 # --- Parse fields ---
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // ""')
 model=$(echo "$input" | jq -r '.model.display_name // ""')
-used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 cost_usd=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
 thinking=$(echo "$input" | jq -r '.thinking.enabled // false')
 fast_mode=$(echo "$input" | jq -r '.fast_mode // false')
@@ -80,9 +79,9 @@ if [ "$fast_mode" = "true" ]; then
   printf "  ${YELLOW}[fast]${RESET}"
 fi
 
-if [ -n "$used_pct" ]; then
-  pct_int=$(printf "%.0f" "$used_pct")
-  printf "  ${DIM}ctx${RESET}  "
+if [ -n "$rl_5h" ]; then
+  pct_int=$(printf "%.0f" "$rl_5h")
+  printf "  ${DIM}tokens${RESET}  "
   build_bar "$pct_int"
 fi
 
