@@ -111,6 +111,14 @@ for (int i = 0; i < size; i++)
 | 패키지 | lowercase | `com.example.user` |
 | 제네릭 타입 파라미터 | 단일 대문자 | `T`, `E`, `K`, `V` |
 
+### 컬렉션 타입 변수 네이밍 규칙
+
+| 타입 | 규칙 | 예시 |
+|------|------|------|
+| `List` | `~List` (`~s` 금지) | `userList`, `splashImageTypeList` |
+| `Set` | `~Set` | `extensionSet`, `roleSet` |
+| `Map` | `~Map` | `detailsByTypeMap`, `platformSplashTypeMap` |
+
 ## SQL / JPQL 규칙
 
 - **키워드는 반드시 대문자**로 작성한다: `SELECT`, `FROM`, `WHERE`, `ORDER BY`, `LIMIT`, `JOIN`, `AND`, `OR` 등
