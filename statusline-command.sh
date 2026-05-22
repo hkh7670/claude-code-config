@@ -13,6 +13,7 @@ rl_5h=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
 
 # Folder: basename of cwd
 folder=$(basename "$cwd")
+folder_icon=$(printf '󰝰')
 
 # Git branch (skip optional locks, no error output)
 branch=$(GIT_OPTIONAL_LOCKS=0 git -C "$cwd" symbolic-ref --short HEAD 2>/dev/null)
@@ -59,7 +60,7 @@ build_bar() {
 }
 
 # --- Assemble output ---
-printf "${CYAN}[%s]${RESET}" "$folder"
+printf "${CYAN}%s %s${RESET}" "$folder_icon" "$folder"
 
 if [ -n "$branch" ]; then
   printf "  ${MAGENTA} %s${RESET}" "$branch"

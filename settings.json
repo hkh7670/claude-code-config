@@ -16,5 +16,6 @@
     }
   },
   "syntaxHighlightingDisabled": false,
-  "theme": "auto"
+  "theme": "auto",
+  "model": "opus"
 }
