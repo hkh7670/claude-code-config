@@ -36,6 +36,27 @@ Google Java Style Guide를 기본으로 하되, 아래 규칙이 우선한다.
 
 여는 중괄호는 같은 줄 끝에 위치한다. 닫는 중괄호는 새 줄에 단독으로 위치한다.
 
+### 다중 인수 괄호 닫기 규칙
+
+여는 괄호 `(` 뒤에 인수가 여러 줄에 걸쳐 이어지는 경우, 닫는 괄호 `)` 는 반드시 새 줄에 단독으로 작성한다.
+
+```java
+// 올바른 예 — ) 는 새 줄에
+try (
+    Writer writer = new OutputStreamWriter(baos, StandardCharsets.UTF_8);
+    CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT.builder()
+        .setHeader(CSV_HEADERS)
+        .get())
+) {
+
+// 잘못된 예 — ) 와 { 가 마지막 인수 끝에 붙음
+try (
+    Writer writer = new OutputStreamWriter(baos, StandardCharsets.UTF_8);
+    CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT.builder()
+        .setHeader(CSV_HEADERS)
+        .get())) {
+```
+
 ```java
 // 올바른 예
 public class Example {
