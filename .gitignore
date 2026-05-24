@@ -23,6 +23,8 @@ backups/
 metrics/
 statsig/
 mcp-needs-auth-cache.json
+paste-cache/
+.last-cleanup
 
 # Plugin install state (re-installed per machine)
 plugins/
