@@ -1,22 +1,22 @@
 {
+  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "bash $HOME/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "everything-claude-code@everything-claude-code": true,
     "jdtls-lsp@claude-plugins-official": true,
-    "kotlin-lsp@claude-plugins-official": true
+    "kotlin-lsp@claude-plugins-official": true,
+    "ecc@ecc": true
   },
   "extraKnownMarketplaces": {
-    "everything-claude-code": {
+    "ecc": {
       "source": {
         "source": "git",
-        "url": "https://github.com/affaan-m/everything-claude-code.git"
+        "url": "https://github.com/affaan-m/ECC.git"
       }
     }
   },
   "syntaxHighlightingDisabled": false,
-  "theme": "auto",
-  "model": "opus"
+  "theme": "auto"
 }
