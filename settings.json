@@ -5,7 +5,8 @@
   },
   "enabledPlugins": {
     "everything-claude-code@everything-claude-code": true,
-    "jdtls-lsp@claude-plugins-official": true
+    "jdtls-lsp@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "everything-claude-code": {
