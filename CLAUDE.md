@@ -140,6 +140,18 @@ for (int i = 0; i < size; i++)
 | `Set` | `~Set` | `extensionSet`, `roleSet` |
 | `Map` | `~Map` | `detailsByTypeMap`, `platformSplashTypeMap` |
 
+### 컬렉션 첫 번째 요소 참조
+
+컬렉션의 첫 번째 요소를 참조할 때 `get(0)` 대신 `getFirst()`를 지향한다. (Java 21+ `SequencedCollection`)
+
+```java
+// 올바른 예
+list.getFirst();
+
+// 잘못된 예
+list.get(0);
+```
+
 ## SQL / JPQL 규칙
 
 - **키워드는 반드시 대문자**로 작성한다: `SELECT`, `FROM`, `WHERE`, `ORDER BY`, `LIMIT`, `JOIN`, `AND`, `OR` 등
@@ -160,3 +172,50 @@ select w from WatchIdSequence w where w.seq < 100000 order by w.id limit 1
 - Entity 직접 노출 금지 — DTO/Record 사용
 - `@RestControllerAdvice`로 예외 처리 중앙화
 - 생성자 주입 사용 (`@Autowired` 필드 주입 금지)
+
+## Spring Boot 예외 처리 규칙
+
+### 바인딩 방식별 날짜 어노테이션
+
+| 바인딩 방식 | 날짜 어노테이션 | 실패 시 예외 |
+|------------|---------------|------------|
+| `@ModelAttribute` / `@RequestParam` | `@DateTimeFormat` | `MethodArgumentNotValidException` (typeMismatch) |
+| `@RequestBody` (Jackson) | `@JsonFormat` | `HttpMessageNotReadableException` |
+
+- `@DateTimeFormat`은 Jackson이 인식하지 못하므로 `@RequestBody` DTO에 사용 금지
+- `@JsonFormat` 없이도 `application.yml`에 `write-dates-as-timestamps: false` 설정 시 ISO 날짜 자동 파싱
+
+### ApiCommonAdvice 예외 핸들러 구성
+
+`@RestControllerAdvice`에 아래 핸들러를 모두 구성한다:
+
+| 핸들러 | 담당 예외 | 발생 상황 |
+|--------|---------|---------|
+| `handleMethodArgumentNotValidException` | `MethodArgumentNotValidException` | `@ModelAttribute`/`@RequestBody` Bean Validation 실패, `@DateTimeFormat` 타입 불일치 |
+| `handleHttpMessageNotReadableException` | `HttpMessageNotReadableException` | `@RequestBody` JSON 파싱 실패 (`@JsonFormat` 포맷 오류 등) |
+| `handleMethodArgumentTypeMismatchException` | `MethodArgumentTypeMismatchException` | `@RequestParam`/`@PathVariable` 타입 불일치 |
+| `handleHandlerMethodValidationException` | `HandlerMethodValidationException` | `@RequestParam`/`@PathVariable` Bean Validation 실패 (Spring Boot 3.2+에서 `@Validated` 없이도 동작) |
+
+### typeMismatch 에러 메시지 처리
+
+`MethodArgumentNotValidException`의 `FieldError`에서 `typeMismatch` 코드 감지 시 Spring 내부 메시지 대신 친절한 메시지로 교체한다. `FieldError.getCodes()`에서 타입 이름을 추출해 타입별 메시지를 반환한다:
+
+```java
+// codes 예시: ["typeMismatch.request.birthDate", "typeMismatch.birthDate", "typeMismatch.java.time.LocalDate", "typeMismatch"]
+case "LocalDate"     → "날짜 형식이 올바르지 않습니다. (yyyy-MM-dd)"
+case "LocalDateTime" → "날짜/시간 형식이 올바르지 않습니다. (yyyy-MM-dd'T'HH:mm:ss)"
+case "Integer" 등    → "숫자를 입력해주세요."
+Enum 타입            → "올바른 값을 입력해주세요. (VALUE1, VALUE2, ...)"  // Class.forName()으로 constants 추출
+```
+
+- Enum 메시지는 `Class.forName(qualifiedName).isEnum()` 확인 후 `getEnumConstants()`로 유효값을 동적으로 포함시킨다
+- `ErrorField.fromInvalidFormat(fieldName, rejectedValue, Class<?> targetType)` 팩토리 메서드로 타입 기반 메시지를 생성한다 (`@RequestBody` JSON 파싱 실패에도 재사용)
+
+### 여러 에러 필드 수집 여부
+
+| 예외 | 여러 필드 에러 수집 |
+|------|-----------------|
+| `MethodArgumentNotValidException` | O — 전체 수집 후 던짐 |
+| `HandlerMethodValidationException` | O — 전체 수집 후 던짐 |
+| `HttpMessageNotReadableException` | X — Jackson은 첫 번째 파싱 실패에서 중단 |
+| `MethodArgumentTypeMismatchException` | X — 첫 번째 파라미터에서 중단 |
