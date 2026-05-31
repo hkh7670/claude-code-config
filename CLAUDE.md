@@ -152,6 +152,54 @@ list.getFirst();
 list.get(0);
 ```
 
+## Spring Boot 유틸리티 규칙
+
+### 문자열 비어있는지 체크
+
+문자열이 비어있는지 체크할 때는 `spring-core`의 `StringUtils.hasText()`를 사용한다.
+
+```java
+// 올바른 예
+if (!StringUtils.hasText(name)) {
+    throw new IllegalArgumentException("이름은 필수입니다.");
+}
+
+// 잘못된 예
+if (name == null || name.isEmpty()) { }
+if (name == null || name.isBlank()) { }
+```
+
+### String 유효성 검증 어노테이션
+
+DTO/Request의 String 필드 유효성 검증 시 `@NotBlank`를 사용한다. (`@NotNull`, `@NotEmpty` 사용 금지)
+
+```java
+// 올바른 예
+@NotBlank
+private String name;
+
+// 잘못된 예
+@NotNull
+private String name;
+
+@NotEmpty
+private String name;
+```
+
+### 컬렉션 비어있는지 체크
+
+컬렉션이 비어있는지 체크할 때는 `null` 체크와 `isEmpty()`를 중복 조합하지 않고, `spring-core`의 `CollectionUtils.isEmpty()`를 사용한다.
+
+```java
+// 올바른 예
+if (CollectionUtils.isEmpty(userList)) {
+    return;
+}
+
+// 잘못된 예
+if (userList == null || userList.isEmpty()) { }
+```
+
 ## SQL / JPQL 규칙
 
 - **키워드는 반드시 대문자**로 작성한다: `SELECT`, `FROM`, `WHERE`, `ORDER BY`, `LIMIT`, `JOIN`, `AND`, `OR` 등
