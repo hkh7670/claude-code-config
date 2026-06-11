@@ -25,31 +25,10 @@ Google Java Style Guide를 기본으로 하되, 아래 규칙이 우선한다.
 
 ### Indentation
 
+- Google Java Style Guide 준수
 - **들여쓰기: 4 spaces** (탭 문자 사용 금지)
-- 연속 들여쓰기(continuation indent): 8 spaces — 일반 표현식 줄바꿈 시
-- **메서드 체이닝**: 4 spaces — `.`으로 이어지는 체인은 4 spaces
-
-```java
-// 메서드 체이닝 — 4 spaces
-return queryFactory
-    .select(new QFooResponse(
-        foo.id,
-        foo.name
-    ))
-    .from(foo)
-    .where(foo.isDeleted.isFalse())
-    .fetch();
-
-// 일반 연속 들여쓰기 — 8 spaces
-String result = someVeryLongMethodName(
-        firstArgument,
-        secondArgument
-);
-```
-
-### Line Length
-
-- **최대 120자**
+- **연속 들여쓰기(continuation indent): 4 spaces** — 메서드 파라미터, 빌더 패턴, 일반 표현식 줄바꿈 모두 동일
+- **최대 줄 길이: 120자**
 
 ### Brace Style: K&R
 
