@@ -63,6 +63,7 @@ That installs resolved hooks to `~/.claude/hooks/hooks.json`. On Windows, the Cl
 | Hook | Event | What It Does |
 |------|-------|-------------|
 | **Session start** | `SessionStart` | Loads previous context and detects package manager |
+| **Plan Canvas sessions** | `SessionStart` | Surfaces open Plan Canvas browser reviews so a fresh session can resume the loop |
 | **Pre-compact** | `PreCompact` | Saves state before context compaction |
 | **Console.log audit** | `Stop` | Checks all modified files for `console.log` after each response |
 | **Session summary** | `Stop` | Persists session state when transcript path is available |
@@ -96,6 +97,9 @@ Remove or comment out the hook entry in `hooks.json`. If installed as a plugin, 
 Use environment variables to control hook behavior without editing `hooks.json`:
 
 ```bash
+# Master switch. Explicit environment values override plugin preferences.
+export ECC_HOOKS_ENABLED=true
+
 # minimal | standard | strict (default: standard)
 export ECC_HOOK_PROFILE=standard
 
@@ -121,10 +125,17 @@ Windows PowerShell:
 [Environment]::SetEnvironmentVariable('ECC_CONTEXT_MONITOR_COST_WARNINGS', 'off', 'User')
 ```
 
-Profiles:
+Claude setup-only value:
+- `off` — disables local ECC hook work through `ecc setup`; it is not a runtime hook profile.
+
+Runtime hook profiles:
 - `minimal` — keep essential lifecycle and safety hooks only.
 - `standard` — default; balanced quality + safety checks.
 - `strict` — enables additional reminders and stricter guardrails.
+
+The Claude plugin exposes the same choices as the personal `hooks_enabled` and
+`hook_profile` settings. Run `ecc setup --mode claude-plugin` to install or
+update the plugin and change those preferences.
 
 ### Writing Your Own Hook
 
@@ -253,6 +264,6 @@ Hook logic is implemented in Node.js scripts for cross-platform behavior on Wind
 
 ## Related
 
-- [rules/common/hooks.md](../rules/common/hooks.md) — Hook architecture guidelines
+- [rules/common/hooks.md](../rules/ecc/common/hooks.md) — Hook architecture guidelines
 - [skills/strategic-compact/](../skills/strategic-compact/) — Strategic compaction skill
 - [scripts/hooks/](../scripts/hooks/) — Hook script implementations
