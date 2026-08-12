@@ -25,6 +25,17 @@ statsig/
 mcp-needs-auth-cache.json
 paste-cache/
 .last-cleanup
+.last-update-result.json
+
+# Background daemon runtime state (local control keys, sockets, PIDs)
+daemon/
+
+# IDE extension connection state (contains local auth token when connected)
+ide/
+
+# Background job runtime state (session-specific; keep pins.json)
+jobs/*/
+jobs/.draft-*
 
 # Plugin install state (re-installed per machine)
 plugins/
@@ -36,3 +47,12 @@ homunculus/
 .credentials*
 *.token
 *api*key*
+*.key
+*.pem
+*.p12
+id_rsa*
+
+# Stray editor/manual backups
+*.bak
+*_backup
+*.orig
