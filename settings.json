@@ -23,5 +23,6 @@
   "syntaxHighlightingDisabled": false,
   "tui": "fullscreen",
   "theme": "auto",
-  "editorMode": "vim"
+  "editorMode": "vim",
+  "includeCoAuthoredBy": false
 }
