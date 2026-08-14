@@ -1,267 +1,49 @@
-# Global Claude Instructions
-
-## Skills
-
-Spring Boot 관련 작업에는 다음 everything-claude-code 스킬을 적극 활용한다:
-
-- `everything-claude-code:springboot-patterns` — Spring Boot 아키텍처 및 레이어 패턴
-- `everything-claude-code:springboot-tdd` — Spring Boot TDD 워크플로우
-- `everything-claude-code:springboot-verification` — Spring Boot 빌드 및 검증
-- `everything-claude-code:springboot-security` — Spring Security 패턴
-- `everything-claude-code:jpa-patterns` — JPA/Hibernate 패턴
-- `everything-claude-code:java-coding-standards` — Java 코딩 표준
-- `everything-claude-code:gradle-build` — Gradle 빌드 문제 해결
-- `everything-claude-code:kotlin-patterns` — Kotlin 패턴 (Kotlin 사용 시)
-- `everything-claude-code:kotlin-testing` — Kotlin 테스트 (Kotlin 사용 시)
-- `everything-claude-code:database-migrations` — DB 마이그레이션 패턴
-- `everything-claude-code:backend-patterns` — 백엔드 공통 패턴
-- `everything-claude-code:api-design` — REST API 설계
-
-## Java/Kotlin Code Style
-
-### Base: Google Java Style Guide (수정 적용)
-
-Google Java Style Guide를 기본으로 하되, 아래 규칙이 우선한다.
-
-### Indentation
-
-- Google Java Style Guide 준수
-- **들여쓰기: 4 spaces** (탭 문자 사용 금지)
-- **연속 들여쓰기(continuation indent): 4 spaces** — 메서드 파라미터, 빌더 패턴, 일반 표현식 줄바꿈 모두 동일
-- **최대 줄 길이: 120자**
-
-### Brace Style: K&R
-
-여는 중괄호는 같은 줄 끝에 위치한다. 닫는 중괄호는 새 줄에 단독으로 위치한다.
-
-### 다중 인수 괄호 닫기 규칙
-
-여는 괄호 `(` 뒤에 인수가 여러 줄에 걸쳐 이어지는 경우, 닫는 괄호 `)` 는 반드시 새 줄에 단독으로 작성한다.
-
-```java
-// 올바른 예 — ) 는 새 줄에
-try (
-    Writer writer = new OutputStreamWriter(baos, StandardCharsets.UTF_8);
-    CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT.builder()
-        .setHeader(CSV_HEADERS)
-        .get())
-) {
-
-// 잘못된 예 — ) 와 { 가 마지막 인수 끝에 붙음
-try (
-    Writer writer = new OutputStreamWriter(baos, StandardCharsets.UTF_8);
-    CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT.builder()
-        .setHeader(CSV_HEADERS)
-        .get())) {
-```
-
-```java
-// 올바른 예
-public class Example {
-    public void method() {
-        if (condition) {
-            doSomething();
-        } else {
-            doOther();
-        }
-    }
-}
-
-// 잘못된 예 (Allman 스타일 금지)
-public void method()
-{
-    if (condition)
-    {
-        doSomething();
-    }
-}
-```
-
-### Braces: 항상 중괄호 사용 (필수)
-
-`if`, `else`, `for`, `while`, `do` 블록은 **한 줄이어도 반드시 중괄호로 묶는다**.
-
-```java
-// 올바른 예
-if (user == null) {
-    return;
-}
-
-for (int i = 0; i < size; i++) {
-    process(i);
-}
-
-// 잘못된 예 (중괄호 생략 금지)
-if (user == null)
-    return;
-
-for (int i = 0; i < size; i++)
-    process(i);
-```
-
-### 공백 규칙
-
-- 키워드와 괄호 사이에 공백: `if (`, `for (`, `while (`
-- 이항 연산자 양쪽에 공백: `a + b`, `x == y`
-- 메서드 이름과 괄호 사이 공백 없음: `method()`
-- 쉼표 뒤에 공백: `method(a, b, c)`
-
-### 빈 줄 규칙
-
-- 클래스 멤버 간 빈 줄 1개
-- 연관된 로직 그룹 사이 빈 줄로 구분
-- 연속 빈 줄 2개 이상 금지
-
-### Import 정렬 순서 (Google Style 준수)
-
-1. `java.*`, `javax.*`
-2. 서드파티 라이브러리 (`org.*`, `com.*` 등)
-3. 프로젝트 내부 패키지
-
-각 그룹 사이 빈 줄 1개. 와일드카드 import 금지.
-
-### 네이밍 규칙
-
-| 대상 | 규칙 | 예시 |
-|------|------|------|
-| 클래스, 인터페이스 | UpperCamelCase | `UserService` |
-| 메서드, 변수 | lowerCamelCase | `findById` |
-| 상수 | UPPER_SNAKE_CASE | `MAX_RETRY_COUNT` |
-| 패키지 | lowercase | `com.example.user` |
-| 제네릭 타입 파라미터 | 단일 대문자 | `T`, `E`, `K`, `V` |
-
-### 컬렉션 타입 변수 네이밍 규칙
-
-| 타입 | 규칙 | 예시 |
-|------|------|------|
-| `List` | `~List` (`~s` 금지) | `userList`, `splashImageTypeList` |
-| `Set` | `~Set` | `extensionSet`, `roleSet` |
-| `Map` | `~Map` | `detailsByTypeMap`, `platformSplashTypeMap` |
-
-### 컬렉션 첫 번째 요소 참조
-
-컬렉션의 첫 번째 요소를 참조할 때 `get(0)` 대신 `getFirst()`를 지향한다. (Java 21+ `SequencedCollection`)
-
-```java
-// 올바른 예
-list.getFirst();
-
-// 잘못된 예
-list.get(0);
-```
-
-## Spring Boot 유틸리티 규칙
-
-### 문자열 비어있는지 체크
-
-문자열이 비어있는지 체크할 때는 `spring-core`의 `StringUtils.hasText()`를 사용한다.
-
-```java
-// 올바른 예
-if (!StringUtils.hasText(name)) {
-    throw new IllegalArgumentException("이름은 필수입니다.");
-}
-
-// 잘못된 예
-if (name == null || name.isEmpty()) { }
-if (name == null || name.isBlank()) { }
-```
-
-### String 유효성 검증 어노테이션
-
-DTO/Request의 String 필드 유효성 검증 시 `@NotBlank`를 사용한다. (`@NotNull`, `@NotEmpty` 사용 금지)
-
-```java
-// 올바른 예
-@NotBlank
-private String name;
-
-// 잘못된 예
-@NotNull
-private String name;
-
-@NotEmpty
-private String name;
-```
-
-### 컬렉션 비어있는지 체크
-
-컬렉션이 비어있는지 체크할 때는 `null` 체크와 `isEmpty()`를 중복 조합하지 않고, `spring-core`의 `CollectionUtils.isEmpty()`를 사용한다.
-
-```java
-// 올바른 예
-if (CollectionUtils.isEmpty(userList)) {
-    return;
-}
-
-// 잘못된 예
-if (userList == null || userList.isEmpty()) { }
-```
-
-## SQL / JPQL 규칙
-
-- **키워드는 반드시 대문자**로 작성한다: `SELECT`, `FROM`, `WHERE`, `ORDER BY`, `LIMIT`, `JOIN`, `AND`, `OR` 등
-- 테이블명·컬럼명·엔티티명은 기존 네이밍 그대로 유지
-
-```sql
--- 올바른 예
-SELECT w FROM WatchIdSequence w WHERE w.seq < 100000 ORDER BY w.id LIMIT 1
-
--- 잘못된 예
-select w from WatchIdSequence w where w.seq < 100000 order by w.id limit 1
-```
-
-## Spring Boot 규칙
-
-- Controller → Service → Repository 레이어 엄격히 구분
-- `@Transactional`은 Service 레이어에만 적용
-- Entity 직접 노출 금지 — DTO/Record 사용
-- `@RestControllerAdvice`로 예외 처리 중앙화
-- 생성자 주입 사용 (`@Autowired` 필드 주입 금지)
-
-## Spring Boot 예외 처리 규칙
-
-### 바인딩 방식별 날짜 어노테이션
-
-| 바인딩 방식 | 날짜 어노테이션 | 실패 시 예외 |
-|------------|---------------|------------|
-| `@ModelAttribute` / `@RequestParam` | `@DateTimeFormat` | `MethodArgumentNotValidException` (typeMismatch) |
-| `@RequestBody` (Jackson) | `@JsonFormat` | `HttpMessageNotReadableException` |
-
-- `@DateTimeFormat`은 Jackson이 인식하지 못하므로 `@RequestBody` DTO에 사용 금지
-- `@JsonFormat` 없이도 `application.yml`에 `write-dates-as-timestamps: false` 설정 시 ISO 날짜 자동 파싱
-
-### ApiCommonAdvice 예외 핸들러 구성
-
-`@RestControllerAdvice`에 아래 핸들러를 모두 구성한다:
-
-| 핸들러 | 담당 예외 | 발생 상황 |
-|--------|---------|---------|
-| `handleMethodArgumentNotValidException` | `MethodArgumentNotValidException` | `@ModelAttribute`/`@RequestBody` Bean Validation 실패, `@DateTimeFormat` 타입 불일치 |
-| `handleHttpMessageNotReadableException` | `HttpMessageNotReadableException` | `@RequestBody` JSON 파싱 실패 (`@JsonFormat` 포맷 오류 등) |
-| `handleMethodArgumentTypeMismatchException` | `MethodArgumentTypeMismatchException` | `@RequestParam`/`@PathVariable` 타입 불일치 |
-| `handleHandlerMethodValidationException` | `HandlerMethodValidationException` | `@RequestParam`/`@PathVariable` Bean Validation 실패 (Spring Boot 3.2+에서 `@Validated` 없이도 동작) |
-
-### typeMismatch 에러 메시지 처리
-
-`MethodArgumentNotValidException`의 `FieldError`에서 `typeMismatch` 코드 감지 시 Spring 내부 메시지 대신 친절한 메시지로 교체한다. `FieldError.getCodes()`에서 타입 이름을 추출해 타입별 메시지를 반환한다:
-
-```java
-// codes 예시: ["typeMismatch.request.birthDate", "typeMismatch.birthDate", "typeMismatch.java.time.LocalDate", "typeMismatch"]
-case "LocalDate"     → "날짜 형식이 올바르지 않습니다. (yyyy-MM-dd)"
-case "LocalDateTime" → "날짜/시간 형식이 올바르지 않습니다. (yyyy-MM-dd'T'HH:mm:ss)"
-case "Integer" 등    → "숫자를 입력해주세요."
-Enum 타입            → "올바른 값을 입력해주세요. (VALUE1, VALUE2, ...)"  // Class.forName()으로 constants 추출
-```
-
-- Enum 메시지는 `Class.forName(qualifiedName).isEnum()` 확인 후 `getEnumConstants()`로 유효값을 동적으로 포함시킨다
-- `ErrorField.fromInvalidFormat(fieldName, rejectedValue, Class<?> targetType)` 팩토리 메서드로 타입 기반 메시지를 생성한다 (`@RequestBody` JSON 파싱 실패에도 재사용)
-
-### 여러 에러 필드 수집 여부
-
-| 예외 | 여러 필드 에러 수집 |
-|------|-----------------|
-| `MethodArgumentNotValidException` | O — 전체 수집 후 던짐 |
-| `HandlerMethodValidationException` | O — 전체 수집 후 던짐 |
-| `HttpMessageNotReadableException` | X — Jackson은 첫 번째 파싱 실패에서 중단 |
-| `MethodArgumentTypeMismatchException` | X — 첫 번째 파라미터에서 중단 |
+# Global Instructions
+
+## Java
+
+- 들여쓰기는 4 spaces로 한다. 탭 문자를 쓰지 않는다.
+- 한 줄은 120자를 넘기지 않는다.
+- 여는 중괄호를 새 줄에 두지 않는다 (K&R). 같은 줄 끝에 붙인다.
+- if/else/for/while/do 블록에서 중괄호를 생략하지 않는다. 한 줄이어도 생략하지 않는다.
+- 여러 줄에 걸친 인수 목록의 닫는 괄호 `)`를 마지막 인수 끝에 붙이지 않는다. 새 줄에 단독으로 둔다.
+- 와일드카드 import를 쓰지 않는다.
+- `List`/`Set`/`Map` 변수명 끝에 `~s`를 쓰지 않는다. `~List`/`~Set`/`~Map`을 붙인다.
+- 컬렉션 첫 요소 조회에 `get(0)`을 쓰지 않는다. `getFirst()`를 쓴다.
+
+## Kotlin
+
+- 들여쓰기는 4 spaces로 한다.
+- 한 줄은 120자를 넘기지 않는다.
+- 세미콜론을 붙이지 않는다.
+- 코루틴에서 `GlobalScope`를 쓰지 않는다. 구조화된 동시성 스코프를 쓴다.
+
+## Spring Boot
+
+- 문자열 공백 체크에 `== null || isEmpty()/isBlank()`를 직접 조합하지 않는다. `StringUtils.hasText()`(spring-core)를 쓴다.
+- 컬렉션 null/empty 체크를 직접 조합하지 않는다. `CollectionUtils.isEmpty()`(spring-core)를 쓴다.
+- DTO의 String 필드에 `@NotNull`/`@NotEmpty`를 쓰지 않는다. `@NotBlank`만 쓴다.
+- Controller에서 Repository를 직접 호출하지 않는다. Service를 거친다.
+- `@Transactional`을 Service 레이어 밖(Controller/Repository)에 붙이지 않는다.
+- Entity를 Controller 응답으로 직접 반환하지 않는다. DTO로 변환한다.
+- 필드 주입(`@Autowired` on field)을 쓰지 않는다. 생성자 주입만 쓴다.
+- `@RequestBody` DTO에 `@DateTimeFormat`을 쓰지 않는다 (Jackson이 인식 못함). `@JsonFormat`을 쓴다.
+- SQL/JPQL 키워드(`SELECT`, `FROM`, `WHERE` 등)를 소문자로 쓰지 않는다.
+
+### JPA
+
+- `@ManyToOne`/`@OneToOne`의 기본 FetchType(EAGER)을 그대로 두지 않는다. `fetch = FetchType.LAZY`를 명시한다.
+- 연관 컬렉션을 반복문 안에서 접근해 지연 로딩을 N번 트리거하지 않는다. Fetch Join이나 `@EntityGraph`로 한 번에 조회한다.
+- 컬렉션을 Fetch Join하면서 동시에 `Pageable`로 페이징하지 않는다 (메모리 페이징 발생). 페이징이 필요하면 `@BatchSize`나 `default_batch_fetch_size`를 쓴다.
+- `spring.jpa.open-in-view`를 기본값(true)으로 두지 않는다. `false`로 명시한다.
+- 조회 전용 쿼리에서 Entity 전체를 가져오지 않는다. JPQL 생성자 표현식이나 Querydsl Projection으로 필요한 필드만 조회한다.
+- 조회 전용 트랜잭션에 `@Transactional(readOnly = true)`를 생략하지 않는다.
+- Entity의 `equals()`/`hashCode()`를 모든 필드로 생성하지 않는다. 식별자(id) 기준으로 구현한다.
+- 연관관계에 `CascadeType.ALL`을 습관적으로 붙이지 않는다. 실제 필요한 cascade 옵션만 명시한다.
+
+## React
+
+- 리스트 렌더링 `key`에 배열 index를 쓰지 않는다. 안정적인 고유 id를 쓴다.
+- 파생 상태 계산에 `useEffect`를 쓰지 않는다. 렌더링 중 계산한다.
+- 실측 병목이 없는 곳에 `useMemo`/`useCallback`을 쓰지 않는다.
+- `default export`를 쓰지 않는다. named export를 쓴다.
