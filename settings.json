@@ -1,4 +1,5 @@
 {
+  "includeCoAuthoredBy": false,
   "statusLine": {
     "type": "command",
     "command": "bash $HOME/.claude/statusline-command.sh"
@@ -23,6 +24,5 @@
   "syntaxHighlightingDisabled": false,
   "tui": "fullscreen",
   "theme": "auto",
-  "editorMode": "vim",
-  "includeCoAuthoredBy": false
+  "editorMode": "normal"
 }
