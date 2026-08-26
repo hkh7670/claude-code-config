@@ -31,7 +31,6 @@
 - Controller에서 Repository를 직접 호출하지 않는다. Service를 거친다.
 - `@Transactional`을 Service 레이어 밖(Controller/Repository)에 붙이지 않는다.
 - Entity를 Controller 응답으로 직접 반환하지 않는다. DTO로 변환한다.
-- 필드 주입(`@Autowired` on field)을 쓰지 않는다. 생성자 주입만 쓴다.
 - `@RequestBody` DTO에 `@DateTimeFormat`을 쓰지 않는다 (Jackson이 인식 못함). `@JsonFormat`을 쓴다.
 - SQL/JPQL 키워드(`SELECT`, `FROM`, `WHERE` 등)를 소문자로 쓰지 않는다.
 
@@ -49,6 +48,4 @@
 ## React
 
 - 리스트 렌더링 `key`에 배열 index를 쓰지 않는다. 안정적인 고유 id를 쓴다.
-- 파생 상태 계산에 `useEffect`를 쓰지 않는다. 렌더링 중 계산한다.
-- 실측 병목이 없는 곳에 `useMemo`/`useCallback`을 쓰지 않는다.
-- `default export`를 쓰지 않는다. named export를 쓴다.
+- 프레임워크가 요구하는 파일(Next.js `page.tsx`/`layout.tsx` 등)을 제외하고 `default export`를 쓰지 않는다.
