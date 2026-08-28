@@ -1,4 +1,4 @@
-# claude-config
+# claude-code-config
 
 `~/.claude/` 개인 설정 동기화 repo.
 
@@ -27,7 +27,7 @@ git pull
 
 ```bash
 mv ~/.claude ~/.claude.backup
-git clone git@github.com:hkh7670/claude-config.git ~/.claude
+git clone git@github.com:hkh7670/claude-code-config.git ~/.claude
 
 /plugin marketplace add https://github.com/affaan-m/ECC
 /plugin install ecc@ecc
