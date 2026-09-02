@@ -19,10 +19,10 @@
     "command": "bash $HOME/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "jdtls-lsp@claude-plugins-official": false,
-    "kotlin-lsp@claude-plugins-official": false,
+    "jdtls-lsp@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true,
     "ecc@ecc": true,
-    "typescript-lsp@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": true,
     "github@claude-plugins-official": false,
     "commit-commands@claude-plugins-official": false,
     "frontend-design@claude-plugins-official": false,
