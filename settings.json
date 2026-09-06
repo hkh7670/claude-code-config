@@ -29,13 +29,21 @@
     "ralph-loop@claude-plugins-official": false,
     "plugin-dev@claude-plugins-official": false,
     "explanatory-output-style@claude-plugins-official": false,
-    "superpowers@claude-plugins-official": false
+    "superpowers@claude-plugins-official": false,
+    "fluent-korean@fluent-korean": true
   },
   "extraKnownMarketplaces": {
     "ecc": {
       "source": {
         "source": "git",
         "url": "https://github.com/affaan-m/ECC.git"
+      },
+      "autoUpdate": true
+    },
+    "fluent-korean": {
+      "source": {
+        "source": "github",
+        "repo": "snflkd/fluent-korean"
       },
       "autoUpdate": true
     }
