@@ -1,7 +1,7 @@
 # Global Instructions
 
 ## 도구 호출
-- 툴 호출 파라미터(JSON)의 한글 등 비ASCII 문자열은 항상 리터럴 UTF-8로 작성하고, \uXXXX 유니코드 이스케이프로 표기하지 않는다
+- 툴 호출 파라미터(JSON)의 한글 등 비ASCII 문자열은 항상 리터럴 UTF-8로 작성하고, \uXXXX 유니코드 이스케이프로 표기하지 않는다.
 
 ## Java
 
@@ -16,7 +16,7 @@
 
 ## Kotlin
 
-- 들여쓰기는 4 spaces로 한다.
+- 들여쓰기는 4 spaces로 한다. 탭 문자를 쓰지 않는다.
 - 한 줄은 100자를 넘기지 않는다.
 - 세미콜론을 붙이지 않는다.
 - 코루틴에서 `GlobalScope`를 쓰지 않는다. 구조화된 동시성 스코프를 쓴다.
@@ -29,14 +29,6 @@
 - Entity를 Controller 응답으로 직접 반환하지 않는다. DTO로 변환한다.
 - `@RequestBody` DTO에 `@DateTimeFormat`을 쓰지 않는다 (Jackson이 인식 못함). `@JsonFormat`을 쓴다.
 - SQL/JPQL 키워드(`SELECT`, `FROM`, `WHERE` 등)를 소문자로 쓰지 않는다.
-- Java Project
-  - 문자열 공백 체크에 `== null || isEmpty()/isBlank()`를 직접 조합하지 않는다. `StringUtils.hasText()`(spring-core)를 쓴다.
-  - 컬렉션 null/empty 체크를 직접 조합하지 않는다. `CollectionUtils.isEmpty()`(spring-core)를 쓴다.
-- Kotlin Project
-  - 문자열 공백 체크에 Spring의 `StringUtils.hasText()`를 쓰지 않는다. Kotlin 표준 확장 함수
-  `isNullOrBlank()`(nullable)/`isBlank()`(non-null)를 쓴다.
-  - 컬렉션 null/empty 체크에 Spring의 `CollectionUtils.isEmpty()`를 쓰지 않는다. Kotlin 표준 확장 함수
-  `isNullOrEmpty()`(nullable)/`isEmpty()`(non-null)를 쓴다.
 
 ### JPA
 
