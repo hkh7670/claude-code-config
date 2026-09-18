@@ -41,6 +41,9 @@ jobs/.draft-*
 # Plugin install state (re-installed per machine)
 plugins/
 .agents/
+
+# Built-in skill sync cache (re-downloaded per machine)
+skills/synced/
 # 루트의 ECC 설치 상태(install-state.json, state.db)만 제외한다.
 # 선행 슬래시가 없으면 rules/ecc/ 같은 하위 경로까지 매칭되어 실제 룰이 무시된다.
 /ecc/
